@@ -3,7 +3,7 @@ github.R
 
 # big climate data sets
 wc2-5/
-
+cmip5/
 
 # History files
 .Rhistory
