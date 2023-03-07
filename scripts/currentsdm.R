@@ -35,14 +35,11 @@ getData("worldclim", var="bio", res=2.5, path = "data") # current data
 #         (or a grid) where each cell contains a value representing information, such as 
 #         temperature. Rasters are digital aerial photographs, imagery from satellites, 
 #         digital pictures, or even scanned maps.
-climList <- list.files(path = "wc2-5/", pattern = ".bil$", 
+climList <- list.files(path = "data/wc2-5/", pattern = ".bil$", 
                        full.names = T)  # '..' leads to the path above the folder where the .rmd file is located
 
 # stacking the bioclim variables to process them at one go
 clim <- raster::stack(climList)
-
-plot(clim[[3]])
-plot(ranaDataSpatialPts, add = T)
 
 
 ### Section 2: Adding Pseudo-Absence Points ### 
@@ -79,7 +76,7 @@ presenceAbsenceEnvDf <- as.data.frame(rbind(occEnv, absenceEnv))
 
 ranaSDM <- dismo::maxent(x = presenceAbsenceEnvDf, # env conditions
                          p = presenceAbsenceV, # p = 1, a = 0
-                         path = "maxent_outputs" 
+                         path = "outputs/maxent_outputs" 
 )
 
 # view the maxent model by navigating in maxent_outputs folder for the html
@@ -113,4 +110,5 @@ currentsdmplot <- ggplot() +
   borders("state") +
   geom_point(data = ranaDataNotCoords, aes(x = longitude, y = latitude, alpha = 0.5))
 
+ggsave("outputs/currentsdm.jpeg", plot = currentsdmplot)
 
